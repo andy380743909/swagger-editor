@@ -4,6 +4,9 @@ LABEL maintainer="fehguy"
 
 ENV BASE_URL ""
 
+ENV CODEGEN_SWAGGER2 ""
+ENV CODEGEN_OAS3 ""
+
 COPY nginx.conf /etc/nginx/
 
 COPY ./index.html /usr/share/nginx/html/

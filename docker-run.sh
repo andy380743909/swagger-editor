@@ -31,6 +31,17 @@ if [[ -f "$SWAGGER_FILE" ]]; then
   sed -i "s|#SWAGGER_ROOT|root $SWAGGER_ROOT/;|g" $NGINX_CONF
 fi
 
+## Adding env var support for custom codegen URL
+if [[ -n "$CODEGEN_SWAGGER2" ]]; then
+  sed -i "s|swagger2GeneratorUrl: 'https://generator.swagger.io/api/swagger.json'|swagger2GeneratorUrl: '$CODEGEN_SWAGGER2'|g" \
+  $INDEX_FILE
+fi
+if [[ -n "$CODEGEN_OAS3" ]]; then
+  sed -i "s|oas3GeneratorUrl: 'https://generator3.swagger.io/openapi.json'
+|oas3GeneratorUrl: '$CODEGEN_OAS3'|g" \
+  $INDEX_FILE
+fi
+
 # Gzip after replacements
 find /usr/share/nginx/html/ -type f -regex ".*\.\(html\|js\|css\)" -exec sh -c "gzip < {} > {}.gz" \;
 
